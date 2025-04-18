@@ -1,8 +1,9 @@
 function doGet(req) {
   var doc = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = doc.getSheetByName("Sheet1");
-  var values = sheet.getDataRange().getValues();
-
+  var sheet = doc.getSheetByName("Configuration");
+  var range =sheet.getRange(1,1,3,10);
+  var values=range.getValues();
+  
   var output = [];
 
   for (var i = 0; i < values.length; i++) {
