@@ -1,7 +1,7 @@
 function doGet(req) {
   var doc = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = doc.getSheetByName("Configuration");
-  var range =sheet.getRange(1,1,3,10);
+  var range =sheet.getRange(1,1,7,10);
   var values=range.getValues();
   
   var output = [];
@@ -15,10 +15,15 @@ function doGet(req) {
       if (!values[i][j]) {
         break;
       }
+      if (['URL','Port',"CICD"].includes(values[0][j])){
+        continue;
+      }
       row[values[0][j]] = values[i][j];
       }
       output.push(row); // Push the row object to the output array
       delete row;
     }
-  return ContentService.createTextOutput(JSON.stringify({ data: output })).setMimeType(ContentService.MimeType.JSON);
+    var json=JSON.stringify({ data: output })
+    console.log(json)
+  return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
 }
